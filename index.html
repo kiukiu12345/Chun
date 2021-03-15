@@ -1,0 +1,2854 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>form</title>
+
+<script type="text/javascript" src="js/vue.min.js"></script>
+
+<style type="text/css">
+	#table table {
+		width: 100%;
+		font-size: 14px;
+		
+	}
+	
+	#table {
+		padding: 0 10px;
+	}
+	
+	table thead th {
+		
+		padding: 10px;
+		text-align: left;
+		
+	}
+	
+	table tbody td {
+		padding: 10px;
+		text-align: left;
+		border-bottom: 1px solid #eee;
+		
+	}
+	
+	table tbody td span {
+		margin: 0 10px;
+		cursor: pointer;
+	}
+	
+	.delete {
+		color: #008cd5;
+		width: 18px;
+	}
+	
+	.delete:hover {
+		color: #008cd5;
+		width: 18px;
+	}
+	.edit {
+		color: #008cd5;
+		width: 18px;
+		
+	}
+
+	.edit:hover {
+		color: #008cd5;
+		width: 18px;
+		
+	}
+	
+	input {
+		border: 1px solid #ccc;
+		padding: 5px;
+		border-radius: 3px;
+		margin-right: 15px;
+	}
+	
+	button {
+		background: #008cd5;
+		border: 0;
+		padding: 4px 15px;
+		border-radius: 3px;
+		color: #fff;
+	}
+
+	
+	#mask {
+		background: rgba(0, 0, 0, .5);
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: 4;
+		top: 0;
+		left: 0;
+	}
+	
+		#maskDelete {
+		background: rgba(0, 0, 0, .5);
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: 4;
+		top: 0;
+		left: 0;
+		 text-align: center;
+	}
+	.mask {
+		width: 330px;
+		height: 230px;
+		background: rgba(255, 255, 255, 1);
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		z-index: 47;
+		border-radius: 5px;
+	}
+	.mask2 {
+		width: 330px;
+		height: 100px;
+		background: rgba(255, 255, 255, 1);
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		z-index: 47;
+		border-radius: 5px;
+	}
+	
+	
+	.contentDel {
+	padding: 10px;
+	}
+	.contentDel button{
+		background: #008cd5;
+		border: 0;
+		padding: 4px 15px;
+		border-radius: 3px;
+		color: #fff;
+		width: 30%;
+        table-layout: fixed;
+        border-collapse: collapse;
+	}
+	
+	
+	.title {
+		padding: 10px;
+		border-bottom: 1px solid #eee;
+	}
+	
+	.title span {
+		float: right;
+		cursor: pointer;
+	}
+	
+	.content {
+		padding: 10px;
+		
+	}
+	
+	.content input {
+  width: 26%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #85929E;
+  margin-right: 15px;
+		
+	}
+	.tabledata :hover {background-color:#f5f5f5;}
+</style>
+
+</head>
+<body>
+<div id="table">
+	  	<table cellpadding="0" cellspacing="0">
+		<thead>
+			<tr >   
+	    <th  width="90%">Tennis Ranking</th>
+		<th ><button @click="addedit">NEW ITEM</button></th>
+			</tr>
+		</thead>
+		
+	</table>
+		
+		
+		
+
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th>Date
+				<img id="dateImg" src="js/null.svg" alt="date" width="18" height="18" @click="sortedArray('date')"></img></th>
+				
+				<th>Gender
+				<img src="js/null.svg" alt="Gender" width="18" height="18" @click="sortedArray('Gender')"></img></th>
+				<th>Type
+				<img src="js/null.svg" alt="Type" width="18" height="18" @click="sortedArray('Type')"></img></th>
+				<th>Ranking
+				<img id="rankingImg" src="js/null.svg" alt="Ranking" width="18" height="18" @click="sortedArray('Ranking')"></img></th>
+				<th>Player
+				<img src="js/null.svg" alt="Player" width="18" height="18" @click="sortedArray('Player')"></img></th>
+				<th>Country
+				<img src="js/null.svg" alt="Country" width="18" height="18" @click="sortedArray('Country')"></img></th>
+				<th>Age
+				<img id="ageImg" src="js/null.svg" alt="Age" width="18" height="18" @click="sortedArray('Age')"></img></th>
+				<th>Points
+				<img src="js/null.svg" alt="Points" width="18" height="18" @click="sortedArray('Points')"></img></th>
+				<th>Tournaments
+				<img src="js/null.svg" alt="Tournaments" width="18" height="18" @click="sortedArray('Tournaments')"></img></th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="tabledata">
+			<tr v-for="(item,index) in newsList">
+				<td width="10%">{{item.Date}}</td>
+				<td>{{item.Gender}}</td>
+				<td width="10%">{{item.Type}}</td>
+				<<td width="9%">{{item.Ranking}}</td>
+				<td width="15%">{{item.Player}}</td>
+				<td width="10%">{{item.Country}}</td>
+				<td width="5%">{{item.Age}}</td>
+				<td width="15%">{{item.Points}}</td>
+				<td width="10%">{{item.Tournaments}}</td>
+				<td width="10%"><img src="js/EditIcon.svg" onmouseover="this.src='js/EditIconHover.svg';" onmouseout="this.src='js/EditIcon.svg';" class="edit" @click="edit(item)"></img>
+				                <img src="js/DeleteIcon.svg" onmouseover="this.src='js/DeleteIconHover.svg';" onmouseout="this.src='js/DeleteIcon.svg';" class="delete" @click="deleteedit(item.id,index)"></img>
+								
+								</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	
+			<div id="maskDelete" v-if="deletelist">
+		<div class="mask2">
+			<div class="title">
+			    Are you sure you want to Delete?
+				<span @click="deletelist=false">
+					X
+				</span>
+			</div>
+			<div  class="contentDel">
+				<button  @click="deletelist=false" >CANCEL</button>
+				<button   @click="deletelist1()">OK</button>
+			</div>
+		</div>
+	</div>
+	
+		<div id="mask" v-if="addlist">
+		<div class="mask">
+			<div class="title">
+			    新增
+				<span @click="addlist=false">
+					X
+				</span>
+			</div>
+			<div class="content">
+				<input type="date" v-model="editDetail.Date" name="Date" value="" placeholder="Date" />
+				<input type="text" v-model="editDetail.Gender" name="Gender" value="" placeholder="Gender" />
+				<input type="text" v-model="editDetail.Type" name="Type" value="" placeholder="Type" />
+				<input type="text" v-model="editDetail.Ranking" name="Ranking" value="" placeholder="Ranking" />
+				<input type="text" v-model="editDetail.Player" name="Player" value="" placeholder="Player" />
+				<h1>            </h1>
+				<button @click="adddetail">SAVE</button>
+				<button @click="addlist=false">CANCEL</button>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="mask" v-if="editlist">
+		<div class="mask">
+			<div class="title">
+				编辑
+				<span @click="editlist=false">
+					X
+				</span>
+			</div>
+			<div class="content">
+				<input type="date" v-model="editDetail.Date" name="Date" value="" placeholder="Date" />
+				<input type="text" v-model="editDetail.Gender" name="Gender" value="" placeholder="Gender" />
+				<input type="text" v-model="editDetail.Type" name="Type" value="" placeholder="Type" />
+				<input type="text" v-model="editDetail.Ranking" name="Ranking" value="" placeholder="Ranking" />
+				<input type="text" v-model="editDetail.Player" name="Player" value="" placeholder="Player" />
+				<h1>            </h1>
+				<button @click="update">SAVE</button>
+				<button @click="editlist=false">CANCEL</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	var app = new Vue({
+		el: '#table',
+		data: {
+		Dateit:{},
+	    Genderit:{},
+		Typeit:{},
+		Rankingit:{},
+		Playerit:{},
+		Countryit:{},
+		Ageit:{},
+		Pointsit:{},
+		Tournamentsit:{},
+			addDetail: {},
+			did: {},
+			didi: {},
+			editlist: false,
+			addlist: false,
+			deletelist: false,
+			editDetail: {},
+			dateSwith: null,
+			rankingSwith: null,
+			ageSwith: null,
+			newsList: [{
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 1,
+   "Player": "Novak Djokovic",
+   "Country": "SRB",
+   "Age": 31,
+   "Points": "9,135",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 2,
+   "Player": "Rafael Nadal",
+   "Country": "ESP",
+   "Age": 32,
+   "Points": "7,480",
+   "Tournaments": 13
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 3,
+   "Player": "Roger Federer",
+   "Country": "SUI",
+   "Age": 37,
+   "Points": "6,420",
+   "Tournaments": 17
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 4,
+   "Player": "Alexander Zverev",
+   "Country": "GER",
+   "Age": 21,
+   "Points": "6,385",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 5,
+   "Player": "Juan Martin del Potro",
+   "Country": "ARG",
+   "Age": 30,
+   "Points": "5,300",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 6,
+   "Player": "Kevin Anderson",
+   "Country": "RSA",
+   "Age": 32,
+   "Points": "4,810",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-01-07",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 7,
+   "Player": "Marin Cilic",
+   "Country": "CRO",
+   "Age": 30,
+   "Points": "4,160",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 11,
+   "Player": "Karen Khachanov",
+   "Country": "RUS",
+   "Age": 22,
+   "Points": "2,835",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 12,
+   "Player": "Borna Coric",
+   "Country": "CRO",
+   "Age": 22,
+   "Points": "2,435",
+   "Tournaments": 19
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 13,
+   "Player": "Fabio Fognini",
+   "Country": "ITA",
+   "Age": 31,
+   "Points": "2,315",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 14,
+   "Player": "Kyle Edmund",
+   "Country": "GBR",
+   "Age": 24,
+   "Points": "2,150",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 15,
+   "Player": "Stefanos Tsitsipas",
+   "Country": "GRE",
+   "Age": 20,
+   "Points": "2,095",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 16,
+   "Player": "Diego Schwartzman",
+   "Country": "ARG",
+   "Age": 26,
+   "Points": "1,925",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 17,
+   "Player": "Milos Raonic",
+   "Country": "CAN",
+   "Age": 28,
+   "Points": "1,900",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 18,
+   "Player": "Marco Cecchinato",
+   "Country": "ITA",
+   "Age": 26,
+   "Points": "1,889",
+   "Tournaments": 31
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 19,
+   "Player": "Daniil Medvedev",
+   "Country": "RUS",
+   "Age": 22,
+   "Points": "1,865",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 20,
+   "Player": "Nikoloz Basilashvili",
+   "Country": "GEO",
+   "Age": 26,
+   "Points": "1,820",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 21,
+   "Player": "Grigor Dimitrov",
+   "Country": "BUL",
+   "Age": 27,
+   "Points": "1,790",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 22,
+   "Player": "David Goffin",
+   "Country": "BEL",
+   "Age": 28,
+   "Points": "1,785",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 23,
+   "Player": "Pablo Carreno Busta",
+   "Country": "ESP",
+   "Age": 27,
+   "Points": "1,705",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 24,
+   "Player": "Roberto Bautista Agut",
+   "Country": "ESP",
+   "Age": 30,
+   "Points": "1,605",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 25,
+   "Player": "Hyeon Chung",
+   "Country": "KOR",
+   "Age": 22,
+   "Points": "1,585",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 26,
+   "Player": "Richard Gasquet",
+   "Country": "FRA",
+   "Age": 32,
+   "Points": "1,535",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 27,
+   "Player": "Denis Shapovalov",
+   "Country": "CAN",
+   "Age": 19,
+   "Points": "1,440",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 28,
+   "Player": "Fernando Verdasco",
+   "Country": "ESP",
+   "Age": 35,
+   "Points": "1,410",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 29,
+   "Player": "Alex de Minaur",
+   "Country": "AUS",
+   "Age": 19,
+   "Points": "1,353",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 30,
+   "Player": "Gilles Simon",
+   "Country": "FRA",
+   "Age": 34,
+   "Points": "1,280",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 31,
+   "Player": "Lucas Pouille",
+   "Country": "FRA",
+   "Age": 24,
+   "Points": "1,245",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 32,
+   "Player": "Philipp Kohlschreiber",
+   "Country": "GER",
+   "Age": 35,
+   "Points": "1,215",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 33,
+   "Player": "Gael Monfils",
+   "Country": "FRA",
+   "Age": 32,
+   "Points": "1,195",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 34,
+   "Player": "Steve Johnson",
+   "Country": "USA",
+   "Age": 29,
+   "Points": "1,190",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 35,
+   "Player": "Andreas Seppi",
+   "Country": "ITA",
+   "Age": 34,
+   "Points": "1,170",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 36,
+   "Player": "Jeremy Chardy",
+   "Country": "FRA",
+   "Age": 31,
+   "Points": "1,120",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 37,
+   "Player": "John Millman",
+   "Country": "AUS",
+   "Age": 29,
+   "Points": "1,108",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 38,
+   "Player": "Marton Fucsovics",
+   "Country": "HUN",
+   "Age": 26,
+   "Points": "1,094",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 39,
+   "Player": "Frances Tiafoe",
+   "Country": "USA",
+   "Age": 20,
+   "Points": "1,080",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 40,
+   "Player": "Martin Klizan",
+   "Country": "SVK",
+   "Age": 29,
+   "Points": "1,063",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 41,
+   "Player": "Tennys Sandgren",
+   "Country": "USA",
+   "Age": 27,
+   "Points": "1,058",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 42,
+   "Player": "Adrian Mannarino",
+   "Country": "FRA",
+   "Age": 30,
+   "Points": "1,045",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 43,
+   "Player": "Malek Jaziri",
+   "Country": "TUN",
+   "Age": 34,
+   "Points": "1,042",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 44,
+   "Player": "Joao Sousa",
+   "Country": "POR",
+   "Age": 29,
+   "Points": "1,017",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 45,
+   "Player": "Nicolas Jarry",
+   "Country": "CHI",
+   "Age": 23,
+   "Points": "1,015",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 46,
+   "Player": "Dusan Lajovic",
+   "Country": "SRB",
+   "Age": 28,
+   "Points": "1,010",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 47,
+   "Player": "Damir Dzumhur",
+   "Country": "BIH",
+   "Age": 26,
+   "Points": "985",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 48,
+   "Player": "Matthew Ebden",
+   "Country": "AUS",
+   "Age": 31,
+   "Points": "981",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 49,
+   "Player": "Sam Querrey",
+   "Country": "USA",
+   "Age": 31,
+   "Points": "975",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 50,
+   "Player": "Taylor Fritz",
+   "Country": "USA",
+   "Age": 21,
+   "Points": "964",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 51,
+   "Player": "Jan-Lennard Struff",
+   "Country": "GER",
+   "Age": 28,
+   "Points": "945",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 52,
+   "Player": "Nick Kyrgios",
+   "Country": "AUS",
+   "Age": 23,
+   "Points": "920",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 53,
+   "Player": "Leonardo Mayer",
+   "Country": "ARG",
+   "Age": 31,
+   "Points": "920",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 54,
+   "Player": "Matteo Berrettini",
+   "Country": "ITA",
+   "Age": 22,
+   "Points": "920",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 55,
+   "Player": "Pierre-Hugues Herbert",
+   "Country": "FRA",
+   "Age": 27,
+   "Points": "903",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 56,
+   "Player": "Mikhail Kukushkin",
+   "Country": "KAZ",
+   "Age": 31,
+   "Points": "890",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 57,
+   "Player": "Tomas Berdych",
+   "Country": "CZE",
+   "Age": 33,
+   "Points": "865",
+   "Tournaments": 16
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 58,
+   "Player": "Robin Haase",
+   "Country": "NED",
+   "Age": 31,
+   "Points": "860",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 59,
+   "Player": "Stan Wawrinka",
+   "Country": "SUI",
+   "Age": 33,
+   "Points": "830",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 60,
+   "Player": "Marius Copil",
+   "Country": "ROU",
+   "Age": 28,
+   "Points": "823",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 61,
+   "Player": "Benoit Paire",
+   "Country": "FRA",
+   "Age": 29,
+   "Points": "820",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 62,
+   "Player": "Denis Kudla",
+   "Country": "USA",
+   "Age": 26,
+   "Points": "818",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 63,
+   "Player": "Peter Gojowczyk",
+   "Country": "GER",
+   "Age": 29,
+   "Points": "805",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 64,
+   "Player": "Albert Ramos-Vinolas",
+   "Country": "ESP",
+   "Age": 30,
+   "Points": "790",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 65,
+   "Player": "Guido Pella",
+   "Country": "ARG",
+   "Age": 28,
+   "Points": "790",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 66,
+   "Player": "Feliciano Lopez",
+   "Country": "ESP",
+   "Age": 37,
+   "Points": "770",
+   "Tournaments": 19
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 67,
+   "Player": "Aljaz Bedene",
+   "Country": "SLO",
+   "Age": 29,
+   "Points": "760",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 68,
+   "Player": "Cameron Norrie",
+   "Country": "GBR",
+   "Age": 23,
+   "Points": "760",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 69,
+   "Player": "Yoshihito Nishioka",
+   "Country": "JPN",
+   "Age": 23,
+   "Points": "758",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 70,
+   "Player": "Mischa Zverev",
+   "Country": "GER",
+   "Age": 31,
+   "Points": "746",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 71,
+   "Player": "Maximilian Marterer",
+   "Country": "GER",
+   "Age": 23,
+   "Points": "744",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 72,
+   "Player": "Jordan Thompson",
+   "Country": "AUS",
+   "Age": 24,
+   "Points": "740",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 73,
+   "Player": "Ivo Karlovic",
+   "Country": "CRO",
+   "Age": 39,
+   "Points": "739",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 74,
+   "Player": "Vasek Pospisil",
+   "Country": "CAN",
+   "Age": 28,
+   "Points": "716",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 75,
+   "Player": "Roberto Carballes Baena",
+   "Country": "ESP",
+   "Age": 25,
+   "Points": "714",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 76,
+   "Player": "Hubert Hurkacz",
+   "Country": "POL",
+   "Age": 21,
+   "Points": "708",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 77,
+   "Player": "Guido Andreozzi",
+   "Country": "ARG",
+   "Age": 27,
+   "Points": "708",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 78,
+   "Player": "Bradley Klahn",
+   "Country": "USA",
+   "Age": 28,
+   "Points": "704",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 79,
+   "Player": "Jaume Munar",
+   "Country": "ESP",
+   "Age": 21,
+   "Points": "702",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 80,
+   "Player": "Federico Delbonis",
+   "Country": "ARG",
+   "Age": 28,
+   "Points": "696",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 81,
+   "Player": "Mackenzie McDonald",
+   "Country": "USA",
+   "Age": 23,
+   "Points": "692",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 82,
+   "Player": "Taro Daniel",
+   "Country": "JPN",
+   "Age": 25,
+   "Points": "691",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 83,
+   "Player": "Ryan Harrison",
+   "Country": "USA",
+   "Age": 26,
+   "Points": "660",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 84,
+   "Player": "Ilya Ivashka",
+   "Country": "BLR",
+   "Age": 24,
+   "Points": "658",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 85,
+   "Player": "Pablo Andujar",
+   "Country": "ESP",
+   "Age": 32,
+   "Points": "658",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 86,
+   "Player": "Ernests Gulbis",
+   "Country": "LAT",
+   "Age": 30,
+   "Points": "657",
+   "Tournaments": 16
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 87,
+   "Player": "Andrey Rublev",
+   "Country": "RUS",
+   "Age": 21,
+   "Points": "655",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 88,
+   "Player": "Bernard Tomic",
+   "Country": "AUS",
+   "Age": 26,
+   "Points": "655",
+   "Tournaments": 13
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 89,
+   "Player": "Cristian Garin",
+   "Country": "CHI",
+   "Age": 22,
+   "Points": "650",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 90,
+   "Player": "Jiri Vesely",
+   "Country": "CZE",
+   "Age": 25,
+   "Points": "633",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 91,
+   "Player": "Jozef Kovalik",
+   "Country": "SVK",
+   "Age": 26,
+   "Points": "632",
+   "Tournaments": 17
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 92,
+   "Player": "Laslo Djere",
+   "Country": "SRB",
+   "Age": 23,
+   "Points": "627",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 93,
+   "Player": "Filip Krajinovic",
+   "Country": "SRB",
+   "Age": 26,
+   "Points": "620",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 94,
+   "Player": "Pablo Cuevas",
+   "Country": "URU",
+   "Age": 33,
+   "Points": "616",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 95,
+   "Player": "Ugo Humbert",
+   "Country": "FRA",
+   "Age": 20,
+   "Points": "613",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 96,
+   "Player": "Evgeny Donskoy",
+   "Country": "RUS",
+   "Age": 28,
+   "Points": "599",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 97,
+   "Player": "Reilly Opelka",
+   "Country": "USA",
+   "Age": 21,
+   "Points": "593",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 98,
+   "Player": "Radu Albot",
+   "Country": "MDA",
+   "Age": 29,
+   "Points": "585",
+   "Tournaments": 33
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 99,
+   "Player": "Mirza Basic",
+   "Country": "BIH",
+   "Age": 27,
+   "Points": "585",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-01-14",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 100,
+   "Player": "Guillermo Garcia-Lopez",
+   "Country": "ESP",
+   "Age": 35,
+   "Points": "582",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-01-28",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 1,
+   "Player": "Novak Djokovic",
+   "Country": "SRB",
+   "Age": 31,
+   "Points": "10,955",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-01-28",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 2,
+   "Player": "Rafael Nadal",
+   "Country": "ESP",
+   "Age": 32,
+   "Points": "8,320",
+   "Tournaments": 13
+ },
+ {
+   "Date": "2019-01-28",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 3,
+   "Player": "Alexander Zverev",
+   "Country": "GER",
+   "Age": 21,
+   "Points": "6,475",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-01-28",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 4,
+   "Player": "Juan Martin del Potro",
+   "Country": "ARG",
+   "Age": 30,
+   "Points": "5,060",
+   "Tournaments": 17
+ },
+ {
+   "Date": "2019-01-28",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 5,
+   "Player": "Kevin Anderson",
+   "Country": "RSA",
+   "Age": 32,
+   "Points": "4,845",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 28,
+   "Player": "Alex de Minaur",
+   "Country": "AUS",
+   "Age": 19,
+   "Points": "1,443",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 29,
+   "Player": "Kyle Edmund",
+   "Country": "GBR",
+   "Age": 24,
+   "Points": "1,440",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 30,
+   "Player": "Frances Tiafoe",
+   "Country": "USA",
+   "Age": 21,
+   "Points": "1,430",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 31,
+   "Player": "Gilles Simon",
+   "Country": "FRA",
+   "Age": 34,
+   "Points": "1,280",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 32,
+   "Player": "Philipp Kohlschreiber",
+   "Country": "GER",
+   "Age": 35,
+   "Points": "1,250",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 33,
+   "Player": "Gael Monfils",
+   "Country": "FRA",
+   "Age": 32,
+   "Points": "1,195",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 34,
+   "Player": "Steve Johnson",
+   "Country": "USA",
+   "Age": 29,
+   "Points": "1,190",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 35,
+   "Player": "Jeremy Chardy",
+   "Country": "FRA",
+   "Age": 31,
+   "Points": "1,155",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 36,
+   "Player": "John Millman",
+   "Country": "AUS",
+   "Age": 29,
+   "Points": "1,108",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 37,
+   "Player": "Andreas Seppi",
+   "Country": "ITA",
+   "Age": 34,
+   "Points": "1,080",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 38,
+   "Player": "Martin Klizan",
+   "Country": "SVK",
+   "Age": 29,
+   "Points": "1,066",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 39,
+   "Player": "Joao Sousa",
+   "Country": "POR",
+   "Age": 29,
+   "Points": "1,062",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 40,
+   "Player": "Taylor Fritz",
+   "Country": "USA",
+   "Age": 21,
+   "Points": "1,036",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 41,
+   "Player": "Nicolas Jarry",
+   "Country": "CHI",
+   "Age": 23,
+   "Points": "1,015",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 42,
+   "Player": "Dusan Lajovic",
+   "Country": "SRB",
+   "Age": 28,
+   "Points": "1,010",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 43,
+   "Player": "Malek Jaziri",
+   "Country": "TUN",
+   "Age": 35,
+   "Points": "1,007",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 44,
+   "Player": "Pierre-Hugues Herbert",
+   "Country": "FRA",
+   "Age": 27,
+   "Points": "983",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 45,
+   "Player": "Matthew Ebden",
+   "Country": "AUS",
+   "Age": 31,
+   "Points": "981",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 46,
+   "Player": "Adrian Mannarino",
+   "Country": "FRA",
+   "Age": 30,
+   "Points": "965",
+   "Tournaments": 31
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 47,
+   "Player": "Marton Fucsovics",
+   "Country": "HUN",
+   "Age": 26,
+   "Points": "959",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 48,
+   "Player": "Sam Querrey",
+   "Country": "USA",
+   "Age": 31,
+   "Points": "940",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 49,
+   "Player": "Leonardo Mayer",
+   "Country": "ARG",
+   "Age": 31,
+   "Points": "920",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 50,
+   "Player": "Hyeon Chung",
+   "Country": "KOR",
+   "Age": 22,
+   "Points": "910",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 51,
+   "Player": "Jan-Lennard Struff",
+   "Country": "GER",
+   "Age": 28,
+   "Points": "910",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 52,
+   "Player": "Damir Dzumhur",
+   "Country": "BIH",
+   "Age": 26,
+   "Points": "905",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 53,
+   "Player": "Matteo Berrettini",
+   "Country": "ITA",
+   "Age": 22,
+   "Points": "904",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 54,
+   "Player": "Robin Haase",
+   "Country": "NED",
+   "Age": 31,
+   "Points": "895",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 55,
+   "Player": "Mikhail Kukushkin",
+   "Country": "KAZ",
+   "Age": 31,
+   "Points": "890",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 56,
+   "Player": "Marius Copil",
+   "Country": "ROU",
+   "Age": 28,
+   "Points": "858",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 57,
+   "Player": "Stan Wawrinka",
+   "Country": "SUI",
+   "Age": 33,
+   "Points": "830",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 58,
+   "Player": "Benoit Paire",
+   "Country": "FRA",
+   "Age": 29,
+   "Points": "820",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 59,
+   "Player": "Guido Pella",
+   "Country": "ARG",
+   "Age": 28,
+   "Points": "790",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 60,
+   "Player": "Jordan Thompson",
+   "Country": "AUS",
+   "Age": 24,
+   "Points": "775",
+   "Tournaments": 30
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 61,
+   "Player": "Peter Gojowczyk",
+   "Country": "GER",
+   "Age": 29,
+   "Points": "770",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 62,
+   "Player": "Feliciano Lopez",
+   "Country": "ESP",
+   "Age": 37,
+   "Points": "770",
+   "Tournaments": 19
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 63,
+   "Player": "Denis Kudla",
+   "Country": "USA",
+   "Age": 26,
+   "Points": "770",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 64,
+   "Player": "Cameron Norrie",
+   "Country": "GBR",
+   "Age": 23,
+   "Points": "762",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 65,
+   "Player": "Aljaz Bedene",
+   "Country": "SLO",
+   "Age": 29,
+   "Points": "760",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 66,
+   "Player": "Nick Kyrgios",
+   "Country": "AUS",
+   "Age": 23,
+   "Points": "750",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 67,
+   "Player": "Mischa Zverev",
+   "Country": "GER",
+   "Age": 31,
+   "Points": "746",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 68,
+   "Player": "Yoshihito Nishioka",
+   "Country": "JPN",
+   "Age": 23,
+   "Points": "729",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 69,
+   "Player": "Taro Daniel",
+   "Country": "JPN",
+   "Age": 26,
+   "Points": "726",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 70,
+   "Player": "Guido Andreozzi",
+   "Country": "ARG",
+   "Age": 27,
+   "Points": "711",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-02-04",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 71,
+   "Player": "Albert Ramos-Vinolas",
+   "Country": "ESP",
+   "Age": 31,
+   "Points": "710",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-02-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 12,
+   "Player": "Stefanos Tsitsipas",
+   "Country": "GRE",
+   "Age": 20,
+   "Points": "2,805",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-02-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 13,
+   "Player": "Borna Coric",
+   "Country": "CRO",
+   "Age": 22,
+   "Points": "2,605",
+   "Tournaments": 19
+ },
+ {
+   "Date": "2019-02-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 14,
+   "Player": "Milos Raonic",
+   "Country": "CAN",
+   "Age": 28,
+   "Points": "2,250",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-02-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 15,
+   "Player": "Fabio Fognini",
+   "Country": "ITA",
+   "Age": 31,
+   "Points": "2,225",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-02-18",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 10,
+   "Player": "Marin Cilic",
+   "Country": "CRO",
+   "Age": 30,
+   "Points": "3,140",
+   "Tournaments": 18
+ },
+ {
+   "Date": "2019-02-18",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 11,
+   "Player": "Karen Khachanov",
+   "Country": "RUS",
+   "Age": 22,
+   "Points": "2,880",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-02-18",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 12,
+   "Player": "Stefanos Tsitsipas",
+   "Country": "GRE",
+   "Age": 20,
+   "Points": "2,805",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-03-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 83,
+   "Player": "Thomas Fabbiano",
+   "Country": "ITA",
+   "Age": 29,
+   "Points": "665",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-03-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 84,
+   "Player": "Tennys Sandgren",
+   "Country": "USA",
+   "Age": 27,
+   "Points": "663",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-03-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 85,
+   "Player": "Peter Gojowczyk",
+   "Country": "GER",
+   "Age": 29,
+   "Points": "640",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-03-11",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 86,
+   "Player": "Nicolas Jarry",
+   "Country": "CHI",
+   "Age": 23,
+   "Points": "640",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 7,
+   "Player": "Kei Nishikori",
+   "Country": "JPN",
+   "Age": 29,
+   "Points": "4,040",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 8,
+   "Player": "Kevin Anderson",
+   "Country": "RSA",
+   "Age": 33,
+   "Points": "3,565",
+   "Tournaments": 16
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 9,
+   "Player": "Karen Khachanov",
+   "Country": "RUS",
+   "Age": 23,
+   "Points": "2,980",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 10,
+   "Player": "Fabio Fognini",
+   "Country": "ITA",
+   "Age": 32,
+   "Points": "2,785",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 11,
+   "Player": "John Isner",
+   "Country": "USA",
+   "Age": 34,
+   "Points": "2,715",
+   "Tournaments": 19
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 12,
+   "Player": "Juan Martin del Potro",
+   "Country": "ARG",
+   "Age": 30,
+   "Points": "2,695",
+   "Tournaments": 14
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 13,
+   "Player": "Daniil Medvedev",
+   "Country": "RUS",
+   "Age": 23,
+   "Points": "2,625",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 62,
+   "Player": "Jordan Thompson",
+   "Country": "AUS",
+   "Age": 25,
+   "Points": "837",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 63,
+   "Player": "Damir Dzumhur",
+   "Country": "BIH",
+   "Age": 27,
+   "Points": "833",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 64,
+   "Player": "Ugo Humbert",
+   "Country": "FRA",
+   "Age": 20,
+   "Points": "817",
+   "Tournaments": 32
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 65,
+   "Player": "Mackenzie McDonald",
+   "Country": "USA",
+   "Age": 24,
+   "Points": "796",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 66,
+   "Player": "Matthew Ebden",
+   "Country": "AUS",
+   "Age": 31,
+   "Points": "786",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-06-10",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 67,
+   "Player": "Robin Haase",
+   "Country": "NED",
+   "Age": 32,
+   "Points": "781",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-08-12",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 16,
+   "Player": "John Isner",
+   "Country": "USA",
+   "Age": 34,
+   "Points": "2,040",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-08-12",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 17,
+   "Player": "Nikoloz Basilashvili",
+   "Country": "GEO",
+   "Age": 27,
+   "Points": "2,020",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-08-12",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 18,
+   "Player": "Marin Cilic",
+   "Country": "CRO",
+   "Age": 30,
+   "Points": "1,940",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-08-12",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 19,
+   "Player": "David Goffin",
+   "Country": "BEL",
+   "Age": 28,
+   "Points": "1,815",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 46,
+   "Player": "Albert Ramos-Vinolas",
+   "Country": "ESP",
+   "Age": 31,
+   "Points": "1,050",
+   "Tournaments": 34
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 47,
+   "Player": "Daniel Evans",
+   "Country": "GBR",
+   "Age": 29,
+   "Points": "1,038",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 48,
+   "Player": "Miomir Kecmanovic",
+   "Country": "SRB",
+   "Age": 20,
+   "Points": "1,029",
+   "Tournaments": 26
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 49,
+   "Player": "Filip Krajinovic",
+   "Country": "SRB",
+   "Age": 27,
+   "Points": "1,018",
+   "Tournaments": 21
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 50,
+   "Player": "Reilly Opelka",
+   "Country": "USA",
+   "Age": 22,
+   "Points": "1,014",
+   "Tournaments": 24
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 51,
+   "Player": "Lorenzo Sonego",
+   "Country": "ITA",
+   "Age": 24,
+   "Points": "1,013",
+   "Tournaments": 31
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 52,
+   "Player": "Pablo Andujar",
+   "Country": "ESP",
+   "Age": 33,
+   "Points": "1,012",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 53,
+   "Player": "Jordan Thompson",
+   "Country": "AUS",
+   "Age": 25,
+   "Points": "1,011",
+   "Tournaments": 29
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 54,
+   "Player": "Feliciano Lopez",
+   "Country": "ESP",
+   "Age": 37,
+   "Points": "1,003",
+   "Tournaments": 20
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 55,
+   "Player": "Pierre-Hugues Herbert",
+   "Country": "FRA",
+   "Age": 28,
+   "Points": "1,003",
+   "Tournaments": 28
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 56,
+   "Player": "Juan Ignacio Londero",
+   "Country": "ARG",
+   "Age": 26,
+   "Points": "997",
+   "Tournaments": 25
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 57,
+   "Player": "Mikhail Kukushkin",
+   "Country": "KAZ",
+   "Age": 31,
+   "Points": "996",
+   "Tournaments": 27
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 58,
+   "Player": "Yoshihito Nishioka",
+   "Country": "JPN",
+   "Age": 23,
+   "Points": "981",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 98,
+   "Player": "Gregoire Barrere",
+   "Country": "FRA",
+   "Age": 25,
+   "Points": "558",
+   "Tournaments": 23
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 99,
+   "Player": "Leonardo Mayer",
+   "Country": "ARG",
+   "Age": 32,
+   "Points": "555",
+   "Tournaments": 22
+ },
+ {
+   "Date": "2019-09-16",
+   "Gender": "men",
+   "Type": "singles",
+   "Ranking": 100,
+   "Player": "Marcel Granollers",
+   "Country": "ESP",
+   "Age": 33,
+   "Points": "551",
+   "Tournaments": 25
+ }],
+			editPlayer:''
+		},
+		mounted() {
+
+		},
+		methods: {
+		
+
+
+		     
+			 sortedArray(text){  
+			       //if User want sort by Age
+			       if(text == 'Age'){
+			 	            if(this.ageSwith == null){
+				                 this.ageSwith = true
+								  document.getElementById("ageImg").src = "js/down.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 this.rankingSwith = null
+			                      }
+					        else if(this.ageSwith == true){
+				                 this.ageSwith = false
+								 document.getElementById("ageImg").src = "js/up.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 this.rankingSwith = null
+			                }
+					        else if(this.ageSwith == false){
+				                 this.ageSwith = true
+								 document.getElementById("ageImg").src = "js/down.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 this.rankingSwith = null
+			                }
+							var kk = 0;
+                            while (kk < 1) {
+                                kk++
+			                    let _this= this
+			                    for(let i = 1; i < this.newsList.length; i++) {
+					                  if(text == 'Age'){
+                                           if(this.ageSwith == true){
+					                            if(this.newsList[i-1].Age > this.newsList[i].Age){
+					                                  this.Dateit =this.newsList[i-1].Date
+					                                  this.Genderit=  this.newsList[i-1].Gender
+			                                    	   this.Typeit =this.newsList[i-1].Type
+					                                    this.Rankingit = this.newsList[i-1].Ranking
+				                                     	this.Playerit =this.newsList[i-1].Player
+				                                      	this.Countryit=  this.newsList[i-1].Country
+				                                     	this.Ageit =this.newsList[i-1].Age
+				                                    	this.Pointsit = this.newsList[i-1].Points
+				                                     	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+			                                            this.newsList[i-1].Date =  this.newsList[i].Date 
+					                            		 this.newsList[i-1].Gender =  this.newsList[i].Gender 
+						                            	 this.newsList[i-1].Type =  this.newsList[i].Type  
+					                                     this.newsList[i-1].Ranking = this.newsList[i].Ranking
+					                                      this.newsList[i-1].Player =  this.newsList[i].Player 
+						                             	 this.newsList[i-1].Country =  this.newsList[i].Country 
+							                             this.newsList[i-1].Age =  this.newsList[i].Age  
+				                                    	 this.newsList[i-1].Points = this.newsList[i].Points
+					                                     this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					                                     
+														 this.newsList[i].Date =  this.Dateit
+							                             this.newsList[i].Gender =  this.Genderit
+							                              this.newsList[i].Type =  this.Typeit 
+					                                     this.newsList[i].Ranking = this.Rankingit
+					                                      this.newsList[i].Player =  this.Playerit
+						                            	 this.newsList[i].Country =  this.Countryit
+						                            	 this.newsList[i].Age =  this.Ageit 
+					                                     this.newsList[i].Points = this.Pointsit
+					                                     this.newsList[i].Tournaments = this.Tournamentsit
+					 
+					 
+					 
+					 
+					                                     kk =0
+							
+						                           	}
+							
+					                            }
+					
+					
+									           if(this.ageSwith == false){
+					                                   if(this.newsList[i-1].Age < this.newsList[i].Age){
+						
+					                                    this.Dateit =this.newsList[i-1].Date
+				                                      	this.Genderit=  this.newsList[i-1].Gender
+				                                       	this.Typeit =this.newsList[i-1].Type
+				                                       	this.Rankingit = this.newsList[i-1].Ranking
+				                                       	this.Playerit =this.newsList[i-1].Player
+				                                       	this.Countryit=  this.newsList[i-1].Country
+				                                       	this.Ageit =this.newsList[i-1].Age
+				                                       	this.Pointsit = this.newsList[i-1].Points
+				                                       	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+				                                        this.newsList[i-1].Date =  this.newsList[i].Date 
+						                              	this.newsList[i-1].Gender =  this.newsList[i].Gender 
+							                            this.newsList[i-1].Type =  this.newsList[i].Type  
+					                                    this.newsList[i-1].Ranking = this.newsList[i].Ranking
+					                                    this.newsList[i-1].Player =  this.newsList[i].Player 
+							                            this.newsList[i-1].Country =  this.newsList[i].Country 
+							                            this.newsList[i-1].Age =  this.newsList[i].Age  
+					                                    this.newsList[i-1].Points = this.newsList[i].Points
+					                                    this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					 
+				                                        this.newsList[i].Date =  this.Dateit
+						                                this.newsList[i].Gender =  this.Genderit
+						                                this.newsList[i].Type =  this.Typeit 
+					                                    this.newsList[i].Ranking = this.Rankingit
+				                                        this.newsList[i].Player =  this.Playerit
+						                           	    this.newsList[i].Country =  this.Countryit
+							                            this.newsList[i].Age =  this.Ageit 
+					                                    this.newsList[i].Points = this.Pointsit
+				                                        this.newsList[i].Tournaments = this.Tournamentsit
+					                                    kk =0
+							
+							                            }
+							                       	}
+												}
+					
+					                     }//for
+	                               	}	//while	
+						      }
+			 
+			 
+			 
+			 
+			 
+			 //if User want to sort by Ranking
+			 if(text == 'Ranking'){
+			 	            if(this.rankingSwith == null){
+				                 this.rankingSwith = true
+								  document.getElementById("rankingImg").src = "js/down.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                      }
+					        else if(this.rankingSwith == true){
+				                 this.rankingSwith = false
+								 document.getElementById("rankingImg").src = "js/up.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                }
+					        else if(this.rankingSwith == false){
+				                 this.rankingSwith = true
+								 document.getElementById("rankingImg").src = "js/down.svg";
+								 document.getElementById("dateImg").src = "js/null.svg";
+								 this.dateSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                }
+							
+							
+							
+							
+							
+						 var kk = 0;
+                         while (kk < 1) {
+                                kk++
+			                    let _this= this
+			                    for(let i = 1; i < this.newsList.length; i++) {
+					                  if(text == 'Ranking'){
+                                           if(this.rankingSwith == true){
+					                            if(this.newsList[i-1].Ranking > this.newsList[i].Ranking){
+					                                  this.Dateit =this.newsList[i-1].Date
+					                                  this.Genderit=  this.newsList[i-1].Gender
+			                                    	   this.Typeit =this.newsList[i-1].Type
+					                                    this.Rankingit = this.newsList[i-1].Ranking
+				                                     	this.Playerit =this.newsList[i-1].Player
+				                                      	this.Countryit=  this.newsList[i-1].Country
+				                                     	this.Ageit =this.newsList[i-1].Age
+				                                    	this.Pointsit = this.newsList[i-1].Points
+				                                     	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+			                                            this.newsList[i-1].Date =  this.newsList[i].Date 
+					                            		 this.newsList[i-1].Gender =  this.newsList[i].Gender 
+						                            	 this.newsList[i-1].Type =  this.newsList[i].Type  
+					                                     this.newsList[i-1].Ranking = this.newsList[i].Ranking
+					                                      this.newsList[i-1].Player =  this.newsList[i].Player 
+						                             	 this.newsList[i-1].Country =  this.newsList[i].Country 
+							                             this.newsList[i-1].Age =  this.newsList[i].Age  
+				                                    	 this.newsList[i-1].Points = this.newsList[i].Points
+					                                     this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					                                     
+														 this.newsList[i].Date =  this.Dateit
+							                             this.newsList[i].Gender =  this.Genderit
+							                              this.newsList[i].Type =  this.Typeit 
+					                                     this.newsList[i].Ranking = this.Rankingit
+					                                      this.newsList[i].Player =  this.Playerit
+						                            	 this.newsList[i].Country =  this.Countryit
+						                            	 this.newsList[i].Age =  this.Ageit 
+					                                     this.newsList[i].Points = this.Pointsit
+					                                     this.newsList[i].Tournaments = this.Tournamentsit
+					 
+					                                     kk =0
+							
+						                           	}
+							
+					                            }
+					
+					
+									           if(this.rankingSwith == false){
+					                                   if(this.newsList[i-1].Ranking < this.newsList[i].Ranking){
+						
+					                                    this.Dateit =this.newsList[i-1].Date
+				                                      	this.Genderit=  this.newsList[i-1].Gender
+				                                       	this.Typeit =this.newsList[i-1].Type
+				                                       	this.Rankingit = this.newsList[i-1].Ranking
+				                                       	this.Playerit =this.newsList[i-1].Player
+				                                       	this.Countryit=  this.newsList[i-1].Country
+				                                       	this.Ageit =this.newsList[i-1].Age
+				                                       	this.Pointsit = this.newsList[i-1].Points
+				                                       	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+				                                        this.newsList[i-1].Date =  this.newsList[i].Date 
+						                              	this.newsList[i-1].Gender =  this.newsList[i].Gender 
+							                            this.newsList[i-1].Type =  this.newsList[i].Type  
+							                            this.newsList[i-1].Ranking = this.newsList[i].Ranking
+							                            this.newsList[i-1].Player =  this.newsList[i].Player 
+									                    this.newsList[i-1].Country =  this.newsList[i].Country 
+							 		                    this.newsList[i-1].Age =  this.newsList[i].Age  
+						                                this.newsList[i-1].Points = this.newsList[i].Points
+					 		                            this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					 
+				                                    	this.newsList[i].Date =  this.Dateit
+							 		                    this.newsList[i].Gender =  this.Genderit
+							 		                    this.newsList[i].Type =  this.Typeit 
+						                             	this.newsList[i].Ranking = this.Rankingit
+					 		                            this.newsList[i].Player =  this.Playerit
+							                            this.newsList[i].Country =  this.Countryit
+						                               	this.newsList[i].Age =  this.Ageit 
+							                            this.newsList[i].Points = this.Pointsit
+					 		                            this.newsList[i].Tournaments = this.Tournamentsit
+					 		                            kk =0
+							
+							                            }
+					                             	}
+												}
+					                        }//for
+		                              }	//while	
+			                     }
+			 
+			 
+			 
+			 
+			              //if User want to sort by Date
+			 	         if(text == 'date'){
+			 		        if(this.dateSwith == null){
+				                 this.dateSwith = true
+								 document.getElementById("dateImg").src = "js/down.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.rankingSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                      }
+					        else if(this.dateSwith == true){
+				                 this.dateSwith = false
+								 document.getElementById("dateImg").src = "js/up.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.rankingSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                }
+					        else if(this.dateSwith == false){
+				                 this.dateSwith = true
+								 document.getElementById("dateImg").src = "js/down.svg";
+								 document.getElementById("rankingImg").src = "js/null.svg";
+								 this.rankingSwith = null
+								 document.getElementById("ageImg").src = "js/null.svg";
+								 this.ageSwith = null
+			                }
+			             
+		
+			 
+			             var kk = 0;
+                         while (kk < 1) {
+                                kk++
+			                    let _this= this
+			                    for(let i = 1; i < this.newsList.length; i++) {
+					                  if(text == 'date'){
+                                           if(this.dateSwith == true){
+					                            if(this.newsList[i-1].Date > this.newsList[i].Date){
+					                                  this.Dateit =this.newsList[i-1].Date
+					                                  this.Genderit=  this.newsList[i-1].Gender
+			                                    	   this.Typeit =this.newsList[i-1].Type
+					                                    this.Rankingit = this.newsList[i-1].Ranking
+				                                     	this.Playerit =this.newsList[i-1].Player
+				                                      	this.Countryit=  this.newsList[i-1].Country
+				                                     	this.Ageit =this.newsList[i-1].Age
+				                                    	this.Pointsit = this.newsList[i-1].Points
+				                                     	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+			                                             this.newsList[i-1].Date =  this.newsList[i].Date 
+					                            		 this.newsList[i-1].Gender =  this.newsList[i].Gender 
+						                            	 this.newsList[i-1].Type =  this.newsList[i].Type  
+					                                     this.newsList[i-1].Ranking = this.newsList[i].Ranking
+					                                     this.newsList[i-1].Player =  this.newsList[i].Player 
+						                             	 this.newsList[i-1].Country =  this.newsList[i].Country 
+							                             this.newsList[i-1].Age =  this.newsList[i].Age  
+				                                    	 this.newsList[i-1].Points = this.newsList[i].Points
+					                                     this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					 
+					 
+					 
+				                                     	 this.newsList[i].Date =  this.Dateit
+							                             this.newsList[i].Gender =  this.Genderit
+							                             this.newsList[i].Type =  this.Typeit 
+					                                     this.newsList[i].Ranking = this.Rankingit
+					                                     this.newsList[i].Player =  this.Playerit
+						                            	 this.newsList[i].Country =  this.Countryit
+						                            	 this.newsList[i].Age =  this.Ageit 
+					                                     this.newsList[i].Points = this.Pointsit
+					                                     this.newsList[i].Tournaments = this.Tournamentsit
+					                                     kk =0
+							
+						                           	}
+							
+					                            }
+					
+					
+									           if(this.dateSwith == false){
+					                                   if(this.newsList[i-1].Date < this.newsList[i].Date){
+						
+					                                    this.Dateit =this.newsList[i-1].Date
+				                                      	this.Genderit=  this.newsList[i-1].Gender
+				                                       	this.Typeit =this.newsList[i-1].Type
+				                                       	this.Rankingit = this.newsList[i-1].Ranking
+				                                       	this.Playerit =this.newsList[i-1].Player
+				                                       	this.Countryit=  this.newsList[i-1].Country
+				                                       	this.Ageit =this.newsList[i-1].Age
+				                                       	this.Pointsit = this.newsList[i-1].Points
+				                                       	this.Tournamentsit = this.newsList[i-1].Tournaments
+					
+				                                        this.newsList[i-1].Date =  this.newsList[i].Date 
+						                              	this.newsList[i-1].Gender =  this.newsList[i].Gender 
+							                            this.newsList[i-1].Type =  this.newsList[i].Type  
+					 		                            this.newsList[i-1].Ranking = this.newsList[i].Ranking
+					   		                            this.newsList[i-1].Player =  this.newsList[i].Player 
+							 		                    this.newsList[i-1].Country =  this.newsList[i].Country 
+							 		                    this.newsList[i-1].Age =  this.newsList[i].Age  
+					 		                            this.newsList[i-1].Points = this.newsList[i].Points
+					 		                            this.newsList[i-1].Tournaments = this.newsList[i].Tournaments
+					                                    this.newsList[i].Date =  this.Dateit
+							 		                    this.newsList[i].Gender =  this.Genderit
+							 		                    this.newsList[i].Type =  this.Typeit 
+					 		                            this.newsList[i].Ranking = this.Rankingit
+					 		                            this.newsList[i].Player =  this.Playerit
+							 		                    this.newsList[i].Country =  this.Countryit
+							 		                    this.newsList[i].Age =  this.Ageit 
+					 		                            this.newsList[i].Points = this.Pointsit
+					 		                            this.newsList[i].Tournaments = this.Tournamentsit
+					 		                            kk =0
+							
+									                    }
+					                                }
+											   }
+				                      	}//for
+		                         }	//while	
+			                 }
+                         },
+	
+			 
+			 	 //Delete Data
+			deleteedit(id, i) {
+		        this.did = id
+				this.didi = i
+				this.deletelist = true
+				
+			},
+			 
+			 
+			 //编辑新增
+			addedit() {
+							this.editDetail.Date = ""
+				this.editDetail.Gender = ""
+				this.editDetail.Type = ""
+				this.editDetail.Ranking = ""
+				this.editDetail.Player = ""
+				this.addlist = true
+				
+			},
+
+			//新增
+			adddetail() {
+				this.newsList.push({
+				            Date: this.editDetail.Date,
+							Gender: this.editDetail.Gender,
+							Type: this.editDetail.Type,
+							
+							Ranking: this.editDetail.Ranking,
+							Player: this.editDetail.Player,
+					
+				})
+				this.addlist = false
+
+			},
+			//删除
+			deletelist1() {
+				this.newsList.splice(this.didi, 1);
+				this.deletelist = false
+			},
+			//编辑
+			edit(item) {
+				this.editDetail = {
+					Date: item.Date,
+					Gender: item.Gender,
+					Type: item.Type,
+					Ranking: item.Ranking,
+					Player: item.Player,
+					Country: item.Country,
+                    Age: item.Age,
+                    Points: item.Points,
+                    Tournaments: item.Tournaments,
+					
+				}
+				this.editlist = true
+				this.editPlayer = item.Player
+				
+			},
+			//确认更新
+			update() {
+				let _this= this
+				for(let i = 0; i < _this.newsList.length; i++) {
+					if(_this.newsList[i].Player ==this.editPlayer) {
+						_this.newsList[i] = {
+							Date: _this.editDetail.Date,
+							Gender: _this.editDetail.Gender,
+							Type: _this.editDetail.Type,
+							Ranking: _this.editDetail.Ranking,
+							Player: this.editPlayer,
+							Country :_this.editDetail.Country,
+                            Age: _this.editDetail.Age,
+                            Points: _this.editDetail.Points,
+                            Tournaments: _this.editDetail.Tournaments,
+							
+						}
+						this.editlist = false
+					}
+				}
+			}
+		}
+	})
+</script>
+
+
+</body>
+</html>

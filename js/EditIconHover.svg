@@ -1,0 +1,44 @@
+<svg width="2000" height="2000" xmlns="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;" stroke="null">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <defs style="vector-effect: non-scaling-stroke;" stroke="null">
+  <filter style="vector-effect: non-scaling-stroke;" stroke="null" height="200%" width="200%" y="-50%" x="-50%" id="svg_26_blur">
+   <feGaussianBlur style="vector-effect: non-scaling-stroke;" stroke="null" stdDeviation="0" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g stroke="null">
+  <title stroke="null">background</title>
+  <rect stroke="null" fill="none" id="canvas_background" height="2002" width="2002" y="-1" x="-1"/>
+  <g style="vector-effect: non-scaling-stroke;" stroke="null" display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect stroke="null" fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g stroke="null">
+  <title stroke="null">Layer 1</title>
+  <ellipse stroke="#000" filter="url(#svg_26_blur)" ry="997.49886" rx="999.00917" id="svg_26" cy="999.89885" cx="1002.00917" stroke-width="0" fill="#999999"/>
+  <g stroke="null" transform="rotate(-1.4674301147460938 980.4801635742313,971.9780273437476) " id="svg_25">
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_5">
+    <g stroke="null" id="svg_6">
+     <g stroke="null" id="svg_7">
+      <polygon stroke="null" id="svg_8" points="402.8805787563324,604.4161224365234 402.8805787563324,684.4161224365234 482.8805787563324,684.4161224365234 718.9335877895355,448.36219787597656 638.9335877895355,368.36207580566406 "/>
+      <path stroke="null" id="svg_9" d="m780.58752,356.52203l-49.814,-49.813c-8.32,-8.32 -21.867,-8.32 -30.187,0l-39.04,39.04l80,80l39.04,-39.04c8.321,-8.32 8.321,-21.867 0.001,-30.187z"/>
+     </g>
+    </g>
+   </g>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_10"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_11"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_12"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_13"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_14"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_15"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_16"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_17"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_18"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_19"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_20"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_21"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_22"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_23"/>
+   <g stroke="null" transform="matrix(3.464333401729118,0,0,3.282741133363618,-1080.2922985176322,-644.5835353393524) " id="svg_24"/>
+  </g>
+ </g>
+</svg>

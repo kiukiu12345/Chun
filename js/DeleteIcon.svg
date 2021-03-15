@@ -1,0 +1,19 @@
+<svg width="2000" height="2000" xmlns="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;" stroke="null">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+ <g stroke="null">
+  <title stroke="null">background</title>
+  <rect stroke="null" fill="none" id="canvas_background" height="2002" width="2002" y="-1" x="-1"/>
+  <g style="vector-effect: non-scaling-stroke;" stroke="null" display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect stroke="null" fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g stroke="null">
+  <title stroke="null">Layer 1</title>
+  <g stroke="null" id="svg_42">
+   <g stroke="null" transform="matrix(12.106109920990388,0,0,12.126401635937373,-2158.2195584000433,-2630.511341836772) " id="svg_40">
+    <path stroke="null" id="svg_41" d="m207.65661,248.24224l38.297,0l0,-5.873c0,-2.068 1.689,-3.76 3.76,-3.76l21.144,0c2.07,0 3.76,1.691 3.76,3.76l0,5.874l37.83,0c1.293,0 2.347,1.057 2.347,2.349l0,11.514l-109.485,0l0,-11.515c0,-1.292 1.055,-2.349 2.347,-2.349l0,0zm6.343,19.972l92.921,0c1.937,0 3.696,1.599 3.521,3.524l-7.864,86.229c-0.174,1.926 -1.59,3.521 -3.523,3.521l-77.3,0c-1.934,0 -3.352,-1.592 -3.524,-3.521l-7.755,-86.229c-0.172,-1.932 1.585,-3.524 3.524,-3.524l0,0zm60.387,13.393l9.866,0l0,65.314l-9.866,0l0,-65.314l0,0zm-39.005,0l9.867,0l0,65.314l-9.867,0l0,-65.314l0,0zm19.5,0l9.869,0l0,65.314l-9.869,0l0,-65.314l0,0z" clip-rule="evenodd" fill-rule="evenodd"/>
+   </g>
+  </g>
+ </g>
+</svg>
